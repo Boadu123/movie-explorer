@@ -37,7 +37,7 @@ export default function Movies() {
     }
   }
 
-  const totalPages = Math.ceil(totalResults / 10); // OMDb returns 10 per page
+  const totalPages = Math.ceil(totalResults / 8); // OMDb returns 10 per page
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
