@@ -14,6 +14,7 @@ interface MovieSummary {
 export default function Movies() {
   const [movies, setMovies] = useState<MovieSummary[]>([]);
   const [searchTerm, setSearchTerm] = useState("batman");
+  const [query, setQuery] = useState("batman");
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
@@ -22,13 +23,13 @@ export default function Movies() {
 
   useEffect(() => {
     fetchMovies();
-  }, [searchTerm, page]);
+  }, [query, page]);
 
   async function fetchMovies() {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://www.omdbapi.com/?apikey=${apiKey}&s=${searchTerm}&page=${page}`
+        `https://www.omdbapi.com/?apikey=${apiKey}&s=${query}&page=${page}`
       );
       const data = await res.json();
       if (data.Response === "True") {
@@ -50,6 +51,7 @@ export default function Movies() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setPage(1);
+    setQuery(searchTerm);
   };
 
   return (
