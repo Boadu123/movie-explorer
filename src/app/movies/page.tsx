@@ -3,8 +3,16 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
+interface MovieSummary {
+  imdbID: string;
+  Title: string;
+  Year: string;
+  Poster: string;
+  Type: string;
+}
+
 export default function Movies() {
-  const [movies, setMovies] = useState<any[]>([]);
+  const [movies, setMovies] = useState<MovieSummary[]>([]);
   const [searchTerm, setSearchTerm] = useState("batman");
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -37,12 +45,11 @@ export default function Movies() {
     }
   }
 
-  const totalPages = Math.ceil(totalResults / 8); // OMDb returns 10 per page
+  const totalPages = Math.ceil(totalResults / 10); // OMDb returns 10 per page
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setPage(1); // reset to page 1 on new search
-    fetchMovies();
+    setPage(1);
   };
 
   return (

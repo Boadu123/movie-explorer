@@ -4,9 +4,22 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
 export default function MovieDetails() {
-  const { movieId } = useParams(); // get the [movieId] from the URL
-  const [movie, setMovie] = useState<any>(null);
+  const { movieId } = useParams();
+  const [movie, setMovie] = useState<MovieDetails | null>(null);
   const [loading, setLoading] = useState(true);
+
+  interface MovieDetails {
+  Title: string;
+  Year: string;
+  Runtime: string;
+  Genre: string;
+  Director: string;
+  Actors: string;
+  Plot: string;
+  Poster: string;
+  imdbRating: string;
+  Response: string;
+}
 
   const apiKey = "895e25b0";
 
