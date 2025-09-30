@@ -63,7 +63,7 @@ export default function Movies() {
 
   return (
     <div className="p-6">
-      <a href ="/" className="p-3 mx-6 rounded-md bg-blue-500 text-white">Home</a>
+      <Link href ="/" className="p-3 mx-6 rounded-md bg-blue-500 text-white">Home</Link>
       {/* Search Bar */}
       <form
         onSubmit={handleSearch}
