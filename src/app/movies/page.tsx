@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
 interface MovieSummary {
   imdbID: string;
@@ -14,28 +13,22 @@ interface MovieSummary {
 
 export default function Movies() {
   const [movies, setMovies] = useState<MovieSummary[]>([]);
-  // State for the controlled input field
   const [searchTerm, setSearchTerm] = useState("batman");
-  // State for the submitted search query
-  const [query, setQuery] = useState("batman");
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
 
   const apiKey = "895e25b0";
 
-  // The API call is now triggered only when 'query' or 'page' changes.
-  // 'query' is only updated when the search button is clicked.
   useEffect(() => {
     fetchMovies();
-  }, [query, page]);
+  }, [searchTerm, page]);
 
   async function fetchMovies() {
     setLoading(true);
     try {
-      // Use the 'query' state for the API fetch, not 'searchTerm'
       const res = await fetch(
-        `https://www.omdbapi.com/?apikey=${apiKey}&s=${query}&page=${page}`
+        `https://www.omdbapi.com/?apikey=${apiKey}&s=${searchTerm}&page=${page}`
       );
       const data = await res.json();
       if (data.Response === "True") {
@@ -54,11 +47,9 @@ export default function Movies() {
 
   const totalPages = Math.ceil(totalResults / 10); // OMDb returns 10 per page
 
-  // On form submission, update the 'query' state with the input's current value.
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setPage(1); // Reset to page 1 for a new search
-    setQuery(searchTerm); // This will trigger the useEffect to fetch movies
+    setPage(1);
   };
 
   return (
@@ -72,9 +63,7 @@ export default function Movies() {
         <input
           type="text"
           placeholder="Search for movies..."
-          // The input is controlled by 'searchTerm' state
           value={searchTerm}
-          // Typing only updates 'searchTerm', it does not trigger an API call
           onChange={(e) => setSearchTerm(e.target.value)}
           className="border m-1 p-2 rounded-md w-64"
         />
@@ -102,7 +91,7 @@ export default function Movies() {
               href={`/movies/${movie.imdbID}`}
               className="border rounded-lg shadow hover:shadow-lg transition p-2 text-center"
             >
-              <Image
+              <img
                 src={movie.Poster !== "N/A" ? movie.Poster : "/no-poster.png"}
                 alt={movie.Title}
                 className="w-full h-64 object-cover rounded-md"
@@ -139,4 +128,3 @@ export default function Movies() {
     </div>
   );
 }
-
