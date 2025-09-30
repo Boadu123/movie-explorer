@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function MovieDetails() {
   const { movieId } = useParams();
@@ -58,7 +60,7 @@ export default function MovieDetails() {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <div className="flex flex-col md:flex-row gap-6">
-        <img
+        <Image
           src={movie.Poster !== "N/A" ? movie.Poster : "/no-poster.png"}
           alt={movie.Title}
           className="w-64 h-auto rounded-lg shadow"

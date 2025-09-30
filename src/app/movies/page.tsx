@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 interface MovieSummary {
   imdbID: string;
@@ -95,19 +97,19 @@ export default function Movies() {
       {!loading && movies.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
           {movies.map((movie) => (
-            <a
+            <Link
               key={movie.imdbID}
               href={`/movies/${movie.imdbID}`}
               className="border rounded-lg shadow hover:shadow-lg transition p-2 text-center"
             >
-              <img
+              <Image
                 src={movie.Poster !== "N/A" ? movie.Poster : "/no-poster.png"}
                 alt={movie.Title}
                 className="w-full h-64 object-cover rounded-md"
               />
               <h3 className="mt-2 font-semibold">{movie.Title}</h3>
               <p className="text-sm text-gray-600">{movie.Year}</p>
-            </a>
+            </Link>
           ))}
         </div>
       )}
